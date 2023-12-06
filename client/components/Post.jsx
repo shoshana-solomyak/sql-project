@@ -9,6 +9,9 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
   const [postTitle, setPostTitle] = useState("");
   const [postBody, setPostBody] = useState("");
   const [showEdit, setShowEdit] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [commentTitle, setCommentTitle] = useState("");
+  const [commentBody, setCommentBody] = useState("");
   const location = useLocation();
   const currUser = Number(location.pathname.split("/")[1]);
 
@@ -63,6 +66,28 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
     }
   }
 
+  async function addComment() {
+    try {
+      const newPost = await fetch(`http://localhost:3000/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: id,
+          title: commentTitle,
+          body: commentBody,
+          is_active: 1,
+        }),
+      });
+      if (!newPost.ok) throw new Error("error accoured");
+      dataChanged((prev) => !prev);
+      setShowNew((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     async function getUsername() {
       try {
@@ -94,6 +119,34 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
         <button type="button" onClick={handleDeleteBttn}>
           Delete post
         </button>
+      )}
+      <button type="button" onClick={() => setShowNew((prev) => !prev)}>
+        Add new comment
+      </button>
+      {showNew && (
+        <form>
+          <label htmlFor="title">title: </label>
+          <input
+            type="text"
+            name="title"
+            value={commentTitle}
+            onChange={(e) => {
+              setCommentTitle(e.target.value);
+            }}
+          />
+          <label htmlFor="body">body: </label>
+          <input
+            type="text"
+            name="body"
+            value={commentBody}
+            onChange={(e) => {
+              setCommentBody(e.target.value);
+            }}
+          />
+          <button type="button" onClick={addComment}>
+            submit
+          </button>
+        </form>
       )}
       {showEdit && (
         <form>

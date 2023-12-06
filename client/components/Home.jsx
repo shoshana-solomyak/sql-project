@@ -5,12 +5,23 @@ const Home = () => {
   const [currPage, setCurrPage] = useState(1);
   const [postsToShow, setPostsToShow] = useState([]);
   const [dataChanged, setDataChanged] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchedTitle, setSearchedTitle] = useState("");
+  const [searchedUser, setSearchedUser] = useState("");
+
+  function handleTitleFilter() {
+    setSearchQuery(`?title=${searchedTitle}`);
+  }
+
+  function handleUserFilter() {
+    setSearchQuery(`?user_id=${searchedUser}`);
+  }
 
   useEffect(() => {
     async function getPosts() {
       try {
         let currPosts = await fetch(
-          `http://localhost:3000/posts/pages/${currPage || 1}`
+          `http://localhost:3000/posts/pages/${currPage || 1}${searchQuery}`
         );
         if (!currPosts.ok) throw new Error("error accoured");
         currPosts = await currPosts.json();
@@ -23,10 +34,41 @@ const Home = () => {
     getPosts().then((value) => {
       setPostsToShow(value);
     });
-  }, [currPage, dataChanged]);
+  }, [currPage, dataChanged, searchQuery]);
 
   return (
     <main>
+      <div>
+        <h2>Filter</h2>
+        <input
+          type="text"
+          value={searchedTitle}
+          onChange={(e) => {
+            setSearchedTitle(e.target.value);
+          }}
+        />
+        <button type="button" onClick={handleTitleFilter}>
+          filter by title
+        </button>
+        <input
+          type="text"
+          value={searchedUser}
+          onChange={(e) => {
+            setSearchedUser(e.target.value);
+          }}
+        />
+        <button type="button" onClick={handleUserFilter}>
+          filter by user id
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setSearchQuery("");
+          }}
+        >
+          clear filter
+        </button>
+      </div>
       {postsToShow &&
         postsToShow.map((post, index) => {
           if (post.is_active) {
