@@ -1,9 +1,10 @@
-var express = require('express');
+const { getSpecificInfo } = require("../utils/GET");
+var express = require("express");
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/:userId", function (req, res, next) {
+  const currUser = getSpecificInfo("user", "id", req.params.userId);
+  currUser ? res.send(currUser) : res.status(400).send("not found");
 });
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const mysql = require("mysql");
 const fs = require("fs");
-// const { json } = require("express");
 
 const con = mysql.createConnection({
   host: "localhost",
@@ -37,7 +36,7 @@ con.connect(function (err) {
         string = string.slice(1);
         con.query(`CREATE TABLE ${name}(${string})`, function (err, result) {
           if (err) throw err;
-          console.log(`${name} created`);
+          console.log(`${name} table created`);
         });
       });
     }
