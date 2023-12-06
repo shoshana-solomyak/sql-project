@@ -14,7 +14,7 @@ function patchById(table, id, obj) {
         console.log("Connected!");
         for (const [key, value] of Object.entries(obj)) {
           con.query(
-            `update ${table} set ${key} = ${value} where id = ${id}`,
+            `update ${table} set ${key} = '${value}' where id = ${id}`,
             function (err, result) {
               if (err) throw err;
             }
