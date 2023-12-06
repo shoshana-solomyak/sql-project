@@ -5,8 +5,13 @@ const { deleteById } = require("../utils/DELETE");
 var express = require("express");
 var router = express.Router();
 
-router.get("/:userId", async function (req, res, next) {
-  const userTodos = await getSpecificInfo("todo", "user_id", req.params.userId);
+router.get("/:userId?sort=id", async function (req, res, next) {
+  const userTodos = await getSpecificInfo(
+    "todo",
+    "user_id",
+    req.params.userId,
+    req.query.sort
+  );
   userTodos ? res.send(userTodos) : res.status(400).send("not found");
 });
 

@@ -3,6 +3,8 @@ function Todos() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
   const [dataChanged, setDataChanged] = useState(false);
+  const [showEdit, setShowEdit] = useState({ id: 0, show: false });
+  const [edited, setEdited] = useState("");
 
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -82,7 +84,42 @@ function Todos() {
       });
   }
 
-  function handeDelete() {}
+  function handeDelete(id) {
+    fetch(`http://localhost:3000/todos/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("error accoured");
+        return res;
+      })
+      .then(() => {
+        setDataChanged((prev) => !prev);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function handleShowEdit(id) {
+    setShowEdit((prev) => ({ id: id, show: !prev.show }));
+  }
+  function handleEdit(id) {
+    fetch(`http://localhost:3000/todos/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: edited }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("error accoured");
+        setDataChanged((prev) => !prev);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <div>
@@ -105,7 +142,19 @@ function Todos() {
                 />
                 {todo.title}
               </label>
-              <button onClick={handeDelete}>delete</button>
+              <button onClick={() => handeDelete(todo.id)}>delete</button>
+              <button onClick={() => handleShowEdit(todo.id)}>edit</button>
+              {showEdit.id === todo.id && showEdit.show == true && (
+                <>
+                  <input
+                    name="title"
+                    onChange={(e) => {
+                      setEdited(e.target.value);
+                    }}
+                  ></input>
+                  <button onClick={() => handleEdit(todo.id)}>change</button>
+                </>
+              )}
             </li>
           ))}
       </ul>
