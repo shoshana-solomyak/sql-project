@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 function Todos() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+  const [dataChanged, setDataChanged] = useState(false);
 
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   let currentId = currentUser.id;
-  function fetchTodos() {
+
+  useEffect(() => {
     fetch(`http://localhost:3000/todos/${currentId}`)
       .then((res) => res.json())
       .then((data) => {
@@ -14,10 +16,7 @@ function Todos() {
 
         setTodos(data);
       });
-  }
-  useEffect(() => {
-    fetchTodos();
-  }, []);
+  }, [dataChanged]);
 
   function handleCheck(todoId) {
     fetch(`http://localhost:3000/todos/${todoId}`, {
@@ -70,7 +69,7 @@ function Todos() {
     fetch("http://localhost:3000/todos", requestOptions)
       .then((response) => response.json())
       .then(() => {
-        fetchTodos();
+        setDataChanged((prev) => !prev);
         console.log("  fetchTodos();");
       });
   }
