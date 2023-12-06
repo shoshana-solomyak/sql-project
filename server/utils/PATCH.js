@@ -17,11 +17,11 @@ function patchById(table, id, obj) {
             `update ${table} set ${key} = '${value}' where id = ${id}`,
             function (err, result) {
               if (err) throw err;
+              resolve(result);
+              return;
             }
           );
         }
-        resolve(obj);
-        return;
       });
     } catch (e) {
       reject(e);

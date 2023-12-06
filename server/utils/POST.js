@@ -22,11 +22,10 @@ function postInfo(table, obj) {
             .join(", ")})`,
           function (err, result) {
             if (err) throw err;
+            resolve(result);
+            return;
           }
         );
-
-        resolve(obj);
-        return;
       });
     } catch (e) {
       resolve(e);

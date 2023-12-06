@@ -16,7 +16,7 @@ function Todos() {
 
         setTodos(data);
       });
-  }, [dataChanged]);
+  }, [dataChanged, currentId]);
 
   function handleCheck(todoId) {
     fetch(`http://localhost:3000/todos/${todoId}`, {
@@ -67,10 +67,18 @@ function Todos() {
       body: JSON.stringify(newTodoObj),
     };
     fetch("http://localhost:3000/todos", requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response;
+      })
+      //   .then((response) => response.json())
       .then(() => {
+        console.log("entered");
         setDataChanged((prev) => !prev);
-        console.log("  fetchTodos();");
+        console.log(dataChanged);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 
