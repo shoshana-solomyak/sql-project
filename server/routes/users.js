@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.get("/:userId", async (req, res, next) => {
   const currUser = await getSpecificInfo("user", "id", req.params.userId);
-  currUser ? res.send(currUser) : res.status(400).send("not found");
+  currUser ? res.send(currUser[0]) : res.status(400).send("not found");
 });
 
 module.exports = router;

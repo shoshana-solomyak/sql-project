@@ -1,12 +1,16 @@
-const { getSpecificInfo, getAllInfo } = require("../utils/GET");
+const { getSpecificInfo, getLimitedInfo } = require("../utils/GET");
 const { postInfo } = require("../utils/POST");
 const { patchById } = require("../utils/PATCH");
 const { deleteById } = require("../utils/DELETE");
 var express = require("express");
 var router = express.Router();
 
-router.get("/", async function (req, res, next) {
-  const allPosts = await getAllInfo("post");
+router.get("/pages/:page", async function (req, res, next) {
+  const allPosts = await getLimitedInfo(
+    "post",
+    10,
+    (Number(req.params.page) - 1) * 10
+  );
   allPosts ? res.send(allPosts) : res.status(400).send("not found");
 });
 
