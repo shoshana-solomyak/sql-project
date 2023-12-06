@@ -1,0 +1,1 @@
+{"id":"INT AUTO_INCREMENT PRIMARY KEY ","post_id":"int","title":"varchar(255)","body":"varchar(255)","username":"varchar(255)","is_active":"bool"}
