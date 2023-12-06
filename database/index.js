@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const fs = require("fs");
-const { json } = require("express");
+// const { json } = require("express");
 
 const con = mysql.createConnection({
   host: "localhost",
