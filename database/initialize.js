@@ -8,11 +8,11 @@ const con = mysql.createConnection({
   password: "z10mz10m",
 });
 
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-  con.query("CREATE DATABASE sql-project-db", function (err, result) {
-    if (err) throw err;
-    console.log("Database created");
-  });
-});
+// con.connect(function (err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+//   con.query("CREATE DATABASE sql-project-db", function (err, result) {
+//     if (err) throw err;
+//     console.log("Database created");
+//   });
+// });
