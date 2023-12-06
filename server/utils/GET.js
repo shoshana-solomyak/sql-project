@@ -34,7 +34,7 @@ function getSpecificInfo(table, field, value) {
         if (err) throw err;
         console.log("Connected!");
         con.query(
-          `select * from ${table} where ${field} = ${value}`,
+          `select * from ${table} where ${field} = "${value}"`,
           (err, result) => {
             if (err) throw err;
             resolve(result);
