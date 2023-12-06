@@ -4,6 +4,8 @@ import Post from "./Post";
 const Home = () => {
   const [currPage, setCurrPage] = useState(1);
   const [postsToShow, setPostsToShow] = useState([]);
+  const [dataChanged, setDataChanged] = useState(false);
+  console.log(dataChanged);
 
   useEffect(() => {
     async function getPosts() {
@@ -22,7 +24,7 @@ const Home = () => {
     getPosts().then((value) => {
       setPostsToShow(value);
     });
-  }, [currPage]);
+  }, [currPage, dataChanged]);
 
   return (
     <main>
@@ -32,9 +34,11 @@ const Home = () => {
             return (
               <Post
                 key={index}
+                id={post.id}
                 title={post.title}
                 body={post.body}
                 userId={post.user_id}
+                dataChanged={setDataChanged}
               />
             );
           }
