@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 
-export function postInfo(table, obj) {
+function postInfo(table, obj) {
   try {
     const con = mysql.createConnection({
       host: "localhost",

@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 
-export function getAllInfo(table) {
+function getAllInfo(table) {
   try {
     const con = mysql.createConnection({
       host: "localhost",
@@ -21,7 +21,7 @@ export function getAllInfo(table) {
   }
 }
 
-export function getSpecificInfo(table, field, value) {
+function getSpecificInfo(table, field, value) {
   try {
     const con = mysql.createConnection({
       host: "localhost",

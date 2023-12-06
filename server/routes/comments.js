@@ -1,8 +1,7 @@
-import { getSpecificInfo, getAllInfo } from "../utils/GET";
-import { postInfo } from "../utils/POST";
-import { patchById } from "../utils/PATCH";
-import { deleteById } from "../utils/DELETE";
-
+const { getSpecificInfo } = require("../utils/GET");
+const { postInfo } = require("../utils/POST");
+const { patchById } = require("../utils/PATCH");
+const { deleteById } = require("../utils/DELETE");
 var express = require("express");
 var router = express.Router();
 

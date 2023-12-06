@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 
-export function deleteById(table, id) {
+function deleteById(table, id) {
   try {
     const con = mysql.createConnection({
       host: "localhost",

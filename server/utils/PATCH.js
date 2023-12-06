@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 
-export function patchById(table, id, obj) {
+function patchById(table, id, obj) {
   try {
     const con = mysql.createConnection({
       host: "localhost",

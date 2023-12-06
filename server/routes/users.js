@@ -1,5 +1,4 @@
-import { getSpecificInfo } from "../utils/GET";
-
+const { getSpecificInfo } = require("../utils/GET");
 var express = require("express");
 var router = express.Router();
 
