@@ -2,10 +2,10 @@ const { getSpecificInfo } = require("../utils/GET");
 var express = require("express");
 var router = express.Router();
 
-router.post("/", function (req, res, next) {
-  const currUser = getSpecificInfo("user", "username", req.body.username);
+router.post("/", async function (req, res, next) {
+  const currUser = await getSpecificInfo("user", "username", req.body.username);
   if (currUser) {
-    const currPassword = getSpecificInfo(
+    const currPassword = await getSpecificInfo(
       "user_password",
       "user_id",
       currUser.id
