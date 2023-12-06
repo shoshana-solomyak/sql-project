@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 
 function postInfo(table, obj) {
+  console.log("obj: ", obj);
   return new Promise((resolve, reject) => {
     try {
       const con = mysql.createConnection({
@@ -14,7 +15,7 @@ function postInfo(table, obj) {
         console.log("Connected!");
         for (const [key, value] of Object.entries(obj)) {
           con.query(
-            `insert into ${table} (${key}) values(${value})`,
+            `insert into ${table} (${key}) values('${value}')`,
             function (err, result) {
               if (err) throw err;
             }
