@@ -34,6 +34,9 @@ const Nav = () => {
         <Link to={`/${userId}`}>
           <button type="button">home feed</button>
         </Link>
+        <Link to={`/${userId}/posts`}>
+          <button type="button">user posts</button>
+        </Link>
         <Link to={`/${userId}/todos`}>
           <button type="button">todos</button>
         </Link>
