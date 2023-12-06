@@ -5,28 +5,28 @@ const { deleteById } = require("../utils/DELETE");
 var express = require("express");
 var router = express.Router();
 
-router.get("/", function (req, res, next) {
-  const allPosts = getAllInfo("post");
+router.get("/", async function (req, res, next) {
+  const allPosts = await getAllInfo("post");
   allPosts ? res.send(allPosts) : res.status(400).send("not found");
 });
 
-router.get("/:userId", function (req, res, next) {
-  const userPosts = getSpecificInfo("post", "user_id", req.params.userId);
+router.get("/:userId", async function (req, res, next) {
+  const userPosts = await getSpecificInfo("post", "user_id", req.params.userId);
   userPosts ? res.send(userPosts) : res.status(400).send("not found");
 });
 
-router.post("/", function (req, res) {
-  const currPost = postInfo("post", req.body);
+router.post("/", async function (req, res) {
+  const currPost = await postInfo("post", req.body);
   currPost ? res.send(currPost) : res.status(400).send("did not succeed");
 });
 
-router.delete("/:postId", function (req, res) {
-  const deletedPost = deleteById("post", req.params.postId);
+router.delete("/:postId", async function (req, res) {
+  const deletedPost = await deleteById("post", req.params.postId);
   deletedPost ? res.send(deletedPost) : res.status(400).send("did not succeed");
 });
 
-router.patch("/:postId", function (req, res) {
-  const patchedPost = patchById("post", req.params.postId, req.body);
+router.patch("/:postId", async function (req, res) {
+  const patchedPost = await patchById("post", req.params.postId, req.body);
   patchedPost ? res.send(patchedPost) : res.status(400).send("did not succeed");
 });
 
