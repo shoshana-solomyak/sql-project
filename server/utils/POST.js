@@ -13,14 +13,18 @@ function postInfo(table, obj) {
       con.connect(function (err) {
         if (err) throw err;
         console.log("Connected!");
-        for (const [key, value] of Object.entries(obj)) {
-          con.query(
-            `insert into ${table} (${key}) values('${value}')`,
-            function (err, result) {
-              if (err) throw err;
-            }
-          );
-        }
+        const keys = Object.keys(obj);
+        const values = Object.values(obj);
+
+        con.query(
+          `INSERT INTO ${table} (${keys.join(", ")}) VALUES (${values
+            .map((val) => `'${val}'`)
+            .join(", ")})`,
+          function (err, result) {
+            if (err) throw err;
+          }
+        );
+
         resolve(obj);
         return;
       });

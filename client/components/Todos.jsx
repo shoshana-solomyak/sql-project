@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 function Todos() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   let currentId = currentUser.id;
-  useEffect(() => {
+  function fetchTodos() {
     fetch(`http://localhost:3000/todos/${currentId}`)
       .then((res) => res.json())
       .then((data) => {
@@ -13,6 +14,9 @@ function Todos() {
 
         setTodos(data);
       });
+  }
+  useEffect(() => {
+    fetchTodos();
   }, []);
 
   function handleCheck(todoId) {
@@ -65,15 +69,13 @@ function Todos() {
     };
     fetch("http://localhost:3000/todos", requestOptions)
       .then((response) => response.json())
-      .then((data) => {
-        fetch(`http://localhost:3000/todos/${currentId}`)
-          .then((res) => res.json())
-          .then((todosData) => {
-            setTodos(todosData);
-          });
-        setNewTodo("");
+      .then(() => {
+        fetchTodos();
+        console.log("  fetchTodos();");
       });
   }
+
+  function handeDelete() {}
 
   return (
     <div>
@@ -96,12 +98,13 @@ function Todos() {
                 />
                 {todo.title}
               </label>
+              <button onClick={handeDelete}>delete</button>
             </li>
           ))}
       </ul>
       <label>
         <input
-          onChange={(e) => {
+          onBlur={(e) => {
             setNewTodo(e.target.value);
             console.log(newTodo);
           }}
