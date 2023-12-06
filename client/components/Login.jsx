@@ -6,8 +6,6 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  localStorage.removeItem("currentUser");
-
   function handleChange(e) {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
@@ -38,7 +36,7 @@ function Login() {
       })
       .then((data) => {
         localStorage.setItem("currentUser", JSON.stringify(data));
-        navigate(`/${data.name}`);
+        navigate(`/${data.id}`);
         console.log(data.username + " logged in");
       })
       .catch((error) => {

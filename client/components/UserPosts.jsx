@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import Post from "./Post";
 
-const Home = () => {
-  const [currPage, setCurrPage] = useState(1);
+const UserPosts = () => {
   const [postsToShow, setPostsToShow] = useState([]);
   const [dataChanged, setDataChanged] = useState(false);
 
@@ -10,7 +9,7 @@ const Home = () => {
     async function getPosts() {
       try {
         let currPosts = await fetch(
-          `http://localhost:3000/posts/pages/${currPage || 1}`
+          `http://localhost:3000/posts/${}`
         );
         if (!currPosts.ok) throw new Error("error accoured");
         currPosts = await currPosts.json();
@@ -20,6 +19,7 @@ const Home = () => {
         return null;
       }
     }
+    
     getPosts().then((value) => {
       setPostsToShow(value);
     });
@@ -42,24 +42,8 @@ const Home = () => {
             );
           }
         })}
-      <button
-        type="button"
-        onClick={() => {
-          setCurrPage((prev) => (prev === 1 ? 1 : prev - 1));
-        }}
-      >
-        previous page
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setCurrPage((prev) => (prev === 10 ? 10 : prev + 1));
-        }}
-      >
-        next page
-      </button>
     </main>
   );
 };
 
-export default Home;
+export default UserPosts;
