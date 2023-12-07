@@ -25,7 +25,7 @@ function getAllInfo(table) {
   });
 }
 
-function getSpecificInfo(table, field, value, order) {
+function getSpecificInfo(table, field, value) {
   return new Promise((resolve, reject) => {
     try {
       const con = mysql.createConnection({
@@ -38,7 +38,7 @@ function getSpecificInfo(table, field, value, order) {
         if (err) throw err;
         console.log("Connected!");
         con.query(
-          `select * from ${table} where ${field} = "${value} order by${order}"`,
+          `select * from ${table} where ${field} = "${value}"`,
           (err, result) => {
             if (err) throw err;
             resolve(result);

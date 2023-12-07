@@ -5,20 +5,21 @@ function Todos() {
   const [dataChanged, setDataChanged] = useState(false);
   const [showEdit, setShowEdit] = useState({ id: 0, show: false });
   const [edited, setEdited] = useState("");
+  const [sort, setSort] = useState("");
 
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
   let currentId = currentUser.id;
+  let apiUrl = `http://localhost:3000/todos/${currentId}`;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/todos/${currentId}`)
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => {
         console.log("data: ", data);
 
         setTodos(data);
       });
-  }, [dataChanged, currentId]);
+  }, [dataChanged, currentId, apiUrl]);
 
   function handleCheck(todoId) {
     fetch(`http://localhost:3000/todos/${todoId}`, {
@@ -28,7 +29,8 @@ function Todos() {
       },
 
       body: JSON.stringify({
-        completed: !todos.find((todo) => todo.id === todoId).completed,
+        completed:
+          todos.find((todo) => todo.id === todoId).completed === 1 ? 0 : 1,
       }),
     })
       .then((response) => {
@@ -84,6 +86,21 @@ function Todos() {
       });
   }
 
+  function sortTodos(value) {
+    setSort(value);
+    if (value === "alphabetically") {
+      let sorted = todos.sort((a, b) => (a.title > b.title ? 1 : -1));
+      console.log("sorted: ", sorted);
+      setTodos(sorted);
+    } else if (value === "completed") {
+      let sorted = todos.sort((a, b) => (a.completed > b.completed ? 1 : -1));
+      setTodos(sorted);
+    } else if (value === "id") {
+      let sorted = todos.sort((a, b) => (a.id > b.id ? 1 : -1));
+      setTodos(sorted);
+    }
+  }
+
   function handeDelete(id) {
     fetch(`http://localhost:3000/todos/${id}`, {
       method: "DELETE",
@@ -124,6 +141,12 @@ function Todos() {
   return (
     <div>
       <h1>todos</h1>
+      <select value={sort} onChange={(e) => sortTodos(e.target.value)}>
+        <option>sort by</option>
+        <option value="id">id</option>
+        <option value="alphabetically">alphabetically</option>
+        <option value="completed">completed</option>
+      </select>
       <br></br>
       <ul style={{ textAlign: "left" }}>
         {todos
