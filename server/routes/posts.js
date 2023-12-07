@@ -2,6 +2,7 @@ const {
   getSpecificInfo,
   getLimitedInfo,
   getSpecificLimitedInfo,
+  getSortedLimitedInfo,
 } = require("../utils/GET");
 const { postInfo } = require("../utils/POST");
 const { patchById } = require("../utils/PATCH");
@@ -11,17 +12,29 @@ var router = express.Router();
 
 router.get("/pages/:page", async function (req, res, next) {
   let allPosts;
-  console.log(Object.keys(req.query));
+  console.log("the query", Object.keys(req.query));
+
   if (Object.keys(req.query).length > 0) {
     const [key, value] = Object.entries(req.query)[0];
-    console.log(key, value);
-    allPosts = await getSpecificLimitedInfo(
-      "post",
-      key,
-      value,
-      10,
-      (Number(req.params.page) - 1) * 10
-    );
+    console.log("key: ", key);
+    if (key == "sort") {
+      allPosts = await getSortedLimitedInfo(
+        "post",
+        value,
+        10,
+        (Number(req.params.page) - 1) * 10
+      );
+    } else {
+      const [key, value] = Object.entries(req.query)[0];
+      console.log(key, value);
+      allPosts = await getSpecificLimitedInfo(
+        "post",
+        key,
+        value,
+        10,
+        (Number(req.params.page) - 1) * 10
+      );
+    }
   } else {
     allPosts = await getLimitedInfo(
       "post",
@@ -53,3 +66,26 @@ router.patch("/:postId", async function (req, res) {
 });
 
 module.exports = router;
+
+// router.get("/pages/:page", async function (req, res, next) {
+//   let allPosts;
+//   console.log(Object.keys(req.query));
+//   if (Object.keys(req.query).length > 0) {
+//     const [key, value] = Object.entries(req.query)[0];
+//     console.log(key, value);
+//     allPosts = await getSpecificLimitedInfo(
+//       "post",
+//       key,
+//       value,
+//       10,
+//       (Number(req.params.page) - 1) * 10
+//     );
+//   } else {
+//     allPosts = await getLimitedInfo(
+//       "post",
+//       10,
+//       (Number(req.params.page) - 1) * 10
+//     );
+//   }
+//   allPosts ? res.send(allPosts) : res.status(400).send("not found");
+// });

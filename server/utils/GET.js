@@ -69,9 +69,28 @@ function getSpecificLimitedInfo(table, field, value, limit, offset) {
   });
 }
 
+function getSortedLimitedInfo(table, order, limit, offset) {
+  return new Promise((resolve, reject) => {
+    try {
+      con.query(
+        `SELECT * FROM ${table} ORDER BY ${order} LIMIT ${limit} OFFSET ${offset}`,
+        (err, result) => {
+          if (err) throw err;
+          resolve(result);
+          return;
+        }
+      );
+    } catch (e) {
+      reject(e);
+      return;
+    }
+  });
+}
+
 module.exports = {
   getAllInfo,
   getSpecificInfo,
   getLimitedInfo,
   getSpecificLimitedInfo,
+  getSortedLimitedInfo,
 };

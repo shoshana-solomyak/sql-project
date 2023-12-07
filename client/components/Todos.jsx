@@ -109,7 +109,7 @@ function Todos() {
       setTodos(filtered);
     } else if (filter == "not completed") {
       {
-        let filtered = todos.filter((todo) => todo.completed === false);
+        let filtered = todos.filter((todo) => todo.completed == false);
         setTodos(filtered);
       }
     } else {
@@ -123,7 +123,7 @@ function Todos() {
     setTodos(allTodos.current);
   }
 
-  function handeDelete(id) {
+  function handleDelete(id) {
     fetch(`http://localhost:3000/todos/${id}`, {
       method: "DELETE",
     })
@@ -215,7 +215,7 @@ function Todos() {
                 />
                 {todo.title}
               </label>
-              <button onClick={() => handeDelete(todo.id)}>delete</button>
+              <button onClick={() => handleDelete(todo.id)}>delete</button>
               <button onClick={() => handleShowEdit(todo.id)}>edit</button>
               {showEdit.id === todo.id && showEdit.show == true && (
                 <>
