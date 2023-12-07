@@ -17,7 +17,6 @@ function Login() {
       setErrorMessage("please fill username and password");
       return;
     }
-    console.log(inputs);
     fetch(`http://localhost:3000`, {
       method: "POST",
       headers: {
@@ -29,8 +28,6 @@ function Login() {
         if (!res.ok) {
           setErrorMessage("incorrect username or password");
           throw new Error("incorrect username or password");
-        } else {
-          console.log("yay");
         }
         return res.json();
       })

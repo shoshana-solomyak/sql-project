@@ -16,8 +16,6 @@ function Todos() {
     fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => {
-        console.log("data: ", data);
-
         setTodos(data);
         allTodos.current = data;
       });
@@ -57,15 +55,12 @@ function Todos() {
   }
 
   function addTodo() {
-    console.log("newtodo: ", newTodo);
     const newTodoObj = {
       user_id: currentId,
       title: newTodo,
       completed: 0,
       is_active: 1,
     };
-
-    console.log("newTodoObj: ", newTodoObj);
 
     const requestOptions = {
       method: "POST",
@@ -79,7 +74,6 @@ function Todos() {
       })
       //   .then((response) => response.json())
       .then(() => {
-        console.log("entered");
         setDataChanged((prev) => !prev);
         console.log(dataChanged);
       })
@@ -92,7 +86,7 @@ function Todos() {
     setSort(value);
     if (value === "alphabetically") {
       let sorted = todos.sort((a, b) => (a.title > b.title ? 1 : -1));
-      console.log("sorted: ", sorted);
+
       setTodos(sorted);
     } else if (value === "completed") {
       let sorted = todos.sort((a, b) => (a.completed > b.completed ? 1 : -1));
@@ -153,6 +147,7 @@ function Todos() {
       .then((res) => {
         if (!res.ok) throw new Error("error accoured");
         setDataChanged((prev) => !prev);
+        setShowEdit((prev) => ({ id: id, show: !prev.show }));
       })
 
       .catch((err) => {
@@ -192,7 +187,6 @@ function Todos() {
         <input
           onBlur={(e) => {
             setNewTodo(e.target.value);
-            console.log(newTodo);
           }}
         />
         <button onClick={addTodo}>add todo</button>
