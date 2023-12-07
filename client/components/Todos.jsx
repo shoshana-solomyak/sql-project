@@ -173,24 +173,36 @@ function Todos() {
         <option value="alphabetically">alphabetically</option>
         <option value="completed">completed</option>
       </select>
-      <input
-        type="text"
-        value={filter}
-        onChange={(e) => {
-          setFilter(e.target.value);
-        }}
-      />
-      <button type="button" onClick={() => handleFilter(filter)}>
-        filter by
-      </button>
-      <button onClick={clearFilter}>clear filter</button>
-
+      <div className="filterNav">
+        <input
+          type="text"
+          value={filter}
+          onChange={(e) => {
+            setFilter(e.target.value);
+          }}
+        />
+        <button type="button" onClick={() => handleFilter(filter)}>
+          filter by
+        </button>
+        <button id="clearFilterBtn" onClick={clearFilter}>
+          clear filter
+        </button>
+      </div>
+      <label className="addTodo">
+        <input
+          onBlur={(e) => {
+            setNewTodo(e.target.value);
+            console.log(newTodo);
+          }}
+        />
+        <button onClick={addTodo}>add todo</button>
+      </label>
       <br></br>
       <ul style={{ textAlign: "left" }}>
         {todos
           .filter((todo) => todo.is_active === 1)
           .map((todo) => (
-            <li key={todo.id}>
+            <li key={todo.id} className="todo">
               <label>
                 {todo.id}
                 <input
@@ -219,15 +231,6 @@ function Todos() {
             </li>
           ))}
       </ul>
-      <label>
-        <input
-          onBlur={(e) => {
-            setNewTodo(e.target.value);
-            console.log(newTodo);
-          }}
-        />
-        <button onClick={addTodo}>add todo</button>
-      </label>
     </div>
   );
 }

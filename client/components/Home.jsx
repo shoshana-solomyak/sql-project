@@ -65,6 +65,8 @@ const Home = () => {
           type="button"
           onClick={() => {
             setSearchQuery("");
+            setSearchedTitle("");
+            setSearchedUser("");
           }}
         >
           clear filter
