@@ -16,6 +16,9 @@ const Home = () => {
   function handleUserFilter() {
     setSearchQuery(`?user_id=${searchedUser}`);
   }
+  function handleSort(sort) {
+    setSearchQuery(`?sort=${sort}`);
+  }
 
   useEffect(() => {
     async function getPosts() {
@@ -70,6 +73,16 @@ const Home = () => {
           clear filter
         </button>
       </div>
+      <select
+        className="sortSelect"
+        onChange={(e) => handleSort(e.target.value)}
+      >
+        <option>sort by</option>
+        <option value="id">id</option>
+        <option value="title">alphabetically</option>
+        <option value="user_id">user id</option>
+      </select>
+
       {postsToShow &&
         postsToShow.map((post, index) => {
           if (post.is_active) {
