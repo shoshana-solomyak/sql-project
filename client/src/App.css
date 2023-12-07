@@ -34,6 +34,12 @@ body {
   border: 2px solid rgb(47, 61, 39);
 }
 
+.errorMessage {
+  margin-left: 38.5vw;
+  color: red;
+  font-weight: 600;
+}
+
 /* nav bar */
 .mainNav {
   width: 98vw;

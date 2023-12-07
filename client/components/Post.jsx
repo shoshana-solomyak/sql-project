@@ -61,6 +61,7 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
       });
       if (!patchedPost.ok) throw new Error("error accoured");
       dataChanged((prev) => !prev);
+      setShowEdit(false);
     } catch (err) {
       console.log(err);
     }
@@ -83,6 +84,7 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
       if (!newPost.ok) throw new Error("error accoured");
       dataChanged((prev) => !prev);
       setShowNew((prev) => !prev);
+      setShowComments(false);
     } catch (err) {
       console.log(err);
     }
@@ -120,7 +122,12 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
           Delete post
         </button>
       )}
-      <button type="button" onClick={() => setShowNew((prev) => !prev)}>
+      <button
+        type="button"
+        onClick={() => {
+          setShowNew((prev) => !prev);
+        }}
+      >
         Add new comment
       </button>
       {showNew && (
