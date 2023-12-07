@@ -70,7 +70,7 @@ function Login() {
 
         <button type="submit">Login</button>
       </form>
-      <p>{errorMessage}</p>
+      <p className="errorMessage">{errorMessage}</p>
     </>
   );
 }

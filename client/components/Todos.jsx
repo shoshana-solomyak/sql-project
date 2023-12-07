@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+
 function Todos() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
@@ -7,9 +9,8 @@ function Todos() {
   const [edited, setEdited] = useState("");
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("");
-
-  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  let currentId = currentUser.id;
+  let location = useLocation();
+  let currentId = location.pathname.split("/")[1];
   let apiUrl = `http://localhost:3000/todos/${currentId}`;
   let allTodos = useRef("");
   useEffect(() => {

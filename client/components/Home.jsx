@@ -11,13 +11,16 @@ const Home = () => {
 
   function handleTitleFilter() {
     setSearchQuery(`?title=${searchedTitle}`);
+    setCurrPage(1);
   }
 
   function handleUserFilter() {
     setSearchQuery(`?user_id=${searchedUser}`);
+    setCurrPage(1);
   }
   function handleSort(sort) {
     setSearchQuery(`?sort=${sort}`);
+    setCurrPage(1);
   }
 
   useEffect(() => {
@@ -28,6 +31,7 @@ const Home = () => {
         );
         if (!currPosts.ok) throw new Error("error accoured");
         currPosts = await currPosts.json();
+        console.log(searchQuery);
         return currPosts;
       } catch (err) {
         console.log(err);

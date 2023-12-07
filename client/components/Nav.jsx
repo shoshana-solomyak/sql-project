@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
@@ -14,15 +14,7 @@ const Nav = () => {
   } else {
     userId = -1;
   }
-  let location = useLocation();
-  const currUserURL = location.pathname.split("/")[1];
   const toLogin = useNavigate();
-
-  useEffect(() => {
-    if (userId != currUserURL) {
-      toLogin("/");
-    }
-  }, [currUserURL, toLogin, userId]);
 
   function logOut() {
     localStorage.setItem("currentUser", "undefined");
