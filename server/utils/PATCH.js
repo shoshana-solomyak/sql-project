@@ -10,6 +10,7 @@ function patchById(table, id, obj) {
         database: "sql_project_db",
       });
       con.connect(function (err) {
+        let counter = 0;
         if (err) throw err;
         console.log("Connected!");
         for (const [key, value] of Object.entries(obj)) {
@@ -17,8 +18,11 @@ function patchById(table, id, obj) {
             `update ${table} set ${key} = '${value}' where id = ${id}`,
             function (err, result) {
               if (err) throw err;
-              resolve(result);
-              return;
+              counter++;
+              if (counter === Object.keys(obj).length) {
+                resolve(obj);
+                return;
+              }
             }
           );
         }

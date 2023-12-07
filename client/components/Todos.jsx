@@ -3,20 +3,23 @@ function Todos() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
   const [dataChanged, setDataChanged] = useState(false);
+  const [showEdit, setShowEdit] = useState({ id: 0, show: false });
+  const [edited, setEdited] = useState("");
+  const [sort, setSort] = useState("");
 
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
   let currentId = currentUser.id;
+  let apiUrl = `http://localhost:3000/todos/${currentId}`;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/todos/${currentId}`)
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => {
         console.log("data: ", data);
 
         setTodos(data);
       });
-  }, [dataChanged, currentId]);
+  }, [dataChanged, currentId, apiUrl]);
 
   function handleCheck(todoId) {
     fetch(`http://localhost:3000/todos/${todoId}`, {
@@ -26,7 +29,8 @@ function Todos() {
       },
 
       body: JSON.stringify({
-        completed: !todos.find((todo) => todo.id === todoId).completed,
+        completed:
+          todos.find((todo) => todo.id === todoId).completed === 1 ? 0 : 1,
       }),
     })
       .then((response) => {
@@ -82,11 +86,67 @@ function Todos() {
       });
   }
 
-  function handeDelete() {}
+  function sortTodos(value) {
+    setSort(value);
+    if (value === "alphabetically") {
+      let sorted = todos.sort((a, b) => (a.title > b.title ? 1 : -1));
+      console.log("sorted: ", sorted);
+      setTodos(sorted);
+    } else if (value === "completed") {
+      let sorted = todos.sort((a, b) => (a.completed > b.completed ? 1 : -1));
+      setTodos(sorted);
+    } else if (value === "id") {
+      let sorted = todos.sort((a, b) => (a.id > b.id ? 1 : -1));
+      setTodos(sorted);
+    }
+  }
+
+  function handeDelete(id) {
+    fetch(`http://localhost:3000/todos/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("error accoured");
+        return res;
+      })
+      .then(() => {
+        setDataChanged((prev) => !prev);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function handleShowEdit(id) {
+    setShowEdit((prev) => ({ id: id, show: !prev.show }));
+  }
+  function handleEdit(id) {
+    fetch(`http://localhost:3000/todos/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: edited }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("error accoured");
+        setDataChanged((prev) => !prev);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <div>
       <h1>todos</h1>
+      <select value={sort} onChange={(e) => sortTodos(e.target.value)}>
+        <option>sort by</option>
+        <option value="id">id</option>
+        <option value="alphabetically">alphabetically</option>
+        <option value="completed">completed</option>
+      </select>
       <br></br>
       <ul style={{ textAlign: "left" }}>
         {todos
@@ -105,7 +165,19 @@ function Todos() {
                 />
                 {todo.title}
               </label>
-              <button onClick={handeDelete}>delete</button>
+              <button onClick={() => handeDelete(todo.id)}>delete</button>
+              <button onClick={() => handleShowEdit(todo.id)}>edit</button>
+              {showEdit.id === todo.id && showEdit.show == true && (
+                <>
+                  <input
+                    name="title"
+                    onChange={(e) => {
+                      setEdited(e.target.value);
+                    }}
+                  ></input>
+                  <button onClick={() => handleEdit(todo.id)}>change</button>
+                </>
+              )}
             </li>
           ))}
       </ul>

@@ -6,7 +6,9 @@ var express = require("express");
 var router = express.Router();
 
 router.get("/:userId", async function (req, res, next) {
+  console.log("hello");
   const userTodos = await getSpecificInfo("todo", "user_id", req.params.userId);
+  console.log("userTodos: ", userTodos);
   userTodos ? res.send(userTodos) : res.status(400).send("not found");
 });
 
