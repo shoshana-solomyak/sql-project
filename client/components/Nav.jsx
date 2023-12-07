@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
-  let userId, userName;
+  const [showUser, setShowUser] = useState(false);
+  let userId, userName, userUsername, userEmail;
   if (localStorage.getItem("currentUser") != "undefined") {
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     userId = currentUser.id;
     userName = currentUser.name;
+    userUsername = currentUser.username;
+    userEmail = currentUser.email;
   } else {
     userId = -1;
   }
@@ -29,7 +32,24 @@ const Nav = () => {
   return (
     <>
       <nav className="mainNav">
-        <h2>Hello, {userName}</h2>
+        <div className="userHeader">
+          <h2 className="userHello">Hello, {userName}</h2>
+          <button
+            type="button"
+            className="userInfoBtn"
+            onClick={() => {
+              setShowUser((prev) => !prev);
+            }}
+          >
+            i
+          </button>
+          {showUser && (
+            <div>
+              <h4>Username: {userUsername}</h4>
+              <h4>Email: {userEmail}</h4>
+            </div>
+          )}
+        </div>
         <button className="mainNavBtns logout" type="button" onClick={logOut}>
           Log out
         </button>

@@ -37,6 +37,7 @@ body {
 /* nav bar */
 .mainNav {
   width: 98vw;
+  height: 13vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: row;
@@ -45,12 +46,31 @@ body {
   margin-bottom: 12px;
 }
 
-.mainNav h2 {
+.userHeader {
   margin-top: 15px;
+}
+
+.userHello {
+  display: inline;
+}
+
+.userInfoBtn {
+  padding: 10px;
+  margin: 7px;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 3px solid rgb(47, 61, 39);
+  color: rgb(47, 61, 39);
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .mainNavBtns {
   margin: 3px;
+  margin-top: 15px;
+  height: 7vh;
   background-color: transparent;
   border: 2px solid rgb(47, 61, 39);
   font-size: 1.3rem;
