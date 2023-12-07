@@ -37,9 +37,9 @@ const Home = () => {
   }, [currPage, dataChanged, searchQuery]);
 
   return (
-    <main>
-      <div>
-        <h2>Filter</h2>
+    <main className="homePage">
+      <h1>Home Page</h1>
+      <div className="filterNav">
         <input
           type="text"
           value={searchedTitle}
@@ -61,6 +61,7 @@ const Home = () => {
           filter by user id
         </button>
         <button
+          id="clearFilterBtn"
           type="button"
           onClick={() => {
             setSearchQuery("");
@@ -85,6 +86,7 @@ const Home = () => {
           }
         })}
       <button
+        className="pageBtn"
         type="button"
         onClick={() => {
           setCurrPage((prev) => (prev === 1 ? 1 : prev - 1));
@@ -93,6 +95,7 @@ const Home = () => {
         previous page
       </button>
       <button
+        className="pageBtn"
         type="button"
         onClick={() => {
           setCurrPage((prev) => (prev === 10 ? 10 : prev + 1));

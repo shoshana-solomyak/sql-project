@@ -3,10 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
-  let userId;
+  let userId, userName;
   if (localStorage.getItem("currentUser") != "undefined") {
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     userId = currentUser.id;
+    userName = currentUser.name;
   } else {
     userId = -1;
   }
@@ -27,18 +28,25 @@ const Nav = () => {
 
   return (
     <>
-      <nav>
-        <button className="logout" type="button" onClick={logOut}>
+      <nav className="mainNav">
+        <h2>Hello, {userName}</h2>
+        <button className="mainNavBtns logout" type="button" onClick={logOut}>
           Log out
         </button>
         <Link to={`/${userId}`}>
-          <button type="button">home feed</button>
+          <button className="mainNavBtns" type="button">
+            home feed
+          </button>
         </Link>
         <Link to={`/${userId}/posts`}>
-          <button type="button">user posts</button>
+          <button className="mainNavBtns" type="button">
+            user posts
+          </button>
         </Link>
         <Link to={`/${userId}/todos`}>
-          <button type="button">todos</button>
+          <button className="mainNavBtns" type="button">
+            todos
+          </button>
         </Link>
       </nav>
     </>

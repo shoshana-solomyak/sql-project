@@ -69,7 +69,7 @@ const Comment = ({
         </button>
       )}
       {showEdit && (
-        <form>
+        <form className="editForm">
           <label htmlFor="title">title: </label>
           <input
             type="text"

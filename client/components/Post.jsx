@@ -106,9 +106,9 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
   }, [userId]);
 
   return (
-    <div>
+    <div className="post">
       <h2>{title}</h2>
-      <h3>{currUsername}</h3>
+      <h4>{currUsername}</h4>
       <p>{body}</p>
       {currUser === userId && (
         <button type="button" onClick={handleEditBttn}>
@@ -124,7 +124,7 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
         Add new comment
       </button>
       {showNew && (
-        <form>
+        <form className="makeNewForm">
           <label htmlFor="title">title: </label>
           <input
             type="text"
@@ -149,7 +149,7 @@ const Post = ({ id, title, body, userId, dataChanged }) => {
         </form>
       )}
       {showEdit && (
-        <form>
+        <form className="editForm">
           <label htmlFor="title">title: </label>
           <input
             type="text"

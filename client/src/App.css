@@ -1,4 +1,119 @@
-/* #root{margin: auto;}
-/* #root{margin: auto;}
-label{margin:10px}
-input{margin: 2px;} */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(213, 237, 197);
+}
+
+/* login form */
+
+.loginForm {
+  width: 30vw;
+  margin-left: 32vw;
+  margin-top: 15vh;
+  border: 7px double rgb(47, 61, 39);
+  padding: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  font-size: 1.3rem;
+  color: rgb(47, 61, 39);
+}
+
+.loginForm label,
+.loginForm input {
+  padding: 2px;
+  margin: 4px;
+  font-size: 1em;
+}
+
+.loginForm button {
+  margin: 6px;
+  border: 2px solid rgb(47, 61, 39);
+}
+
+/* nav bar */
+.mainNav {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.mainNav h2 {
+  margin-top: 15px;
+}
+
+.mainNavBtns {
+  margin: 3px;
+  background-color: transparent;
+  border: 2px solid rgb(47, 61, 39);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: rgb(47, 61, 39);
+}
+
+.logout {
+  background-color: rgb(86, 92, 82);
+  color: white;
+}
+
+/* posts */
+
+.filterNav {
+  margin: 7px;
+}
+
+.filterNav button,
+.filterNav input {
+  margin: 4px;
+  background-color: transparent;
+  border: 2px solid rgb(47, 61, 39);
+  padding: 7px;
+  font-weight: 600;
+}
+
+#clearFilterBtn {
+  background-color: rgb(86, 92, 82);
+  color: white;
+}
+
+.post {
+  border: 4px double rgb(47, 61, 39);
+  margin: 4px;
+  padding: 4px;
+}
+
+.post button {
+  margin: 4px;
+}
+
+.post p {
+  margin: 5px;
+}
+
+.pageBtn {
+  margin: 7px;
+  background-color: transparent;
+  border: 2px solid rgb(47, 61, 39);
+  padding: 7px;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.editForm,
+.makeNewForm {
+  padding: 4px;
+}
+
+.editForm input,
+.editForm button,
+.makeNewForm input,
+.makeNewForm button {
+  padding: 3px;
+  margin: 2px;
+}

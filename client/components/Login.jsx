@@ -45,8 +45,8 @@ function Login() {
   }
   return (
     <>
-      <h1>LogIn</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="loginForm" onSubmit={handleSubmit}>
+        <h1>Login</h1>
         <label>
           Username:
           <input

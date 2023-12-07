@@ -53,6 +53,7 @@ const UserPosts = () => {
 
   return (
     <main>
+      <h1>User Posts</h1>
       <button type="button" onClick={() => setShowNew((prev) => !prev)}>
         Add new post
       </button>
