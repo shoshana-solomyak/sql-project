@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 function Todos() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
@@ -6,11 +6,12 @@ function Todos() {
   const [showEdit, setShowEdit] = useState({ id: 0, show: false });
   const [edited, setEdited] = useState("");
   const [sort, setSort] = useState("");
+  const [filter, setFilter] = useState("");
 
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
   let currentId = currentUser.id;
   let apiUrl = `http://localhost:3000/todos/${currentId}`;
-
+  let allTodos = useRef("");
   useEffect(() => {
     fetch(apiUrl)
       .then((res) => res.json())
@@ -18,6 +19,7 @@ function Todos() {
         console.log("data: ", data);
 
         setTodos(data);
+        allTodos.current = data;
       });
   }, [dataChanged, currentId, apiUrl]);
 
@@ -101,6 +103,26 @@ function Todos() {
     }
   }
 
+  function handleFilter(filter) {
+    if (filter == "completed") {
+      let filtered = todos.filter((todo) => todo.completed);
+      setTodos(filtered);
+    } else if (filter == "not completed") {
+      {
+        let filtered = todos.filter((todo) => todo.completed === false);
+        setTodos(filtered);
+      }
+    } else {
+      {
+        let filtered = todos.filter((todo) => todo.title === filter);
+        setTodos(filtered);
+      }
+    }
+  }
+  function clearFilter() {
+    setTodos(allTodos.current);
+  }
+
   function handeDelete(id) {
     fetch(`http://localhost:3000/todos/${id}`, {
       method: "DELETE",
@@ -147,6 +169,18 @@ function Todos() {
         <option value="alphabetically">alphabetically</option>
         <option value="completed">completed</option>
       </select>
+      <input
+        type="text"
+        value={filter}
+        onChange={(e) => {
+          setFilter(e.target.value);
+        }}
+      />
+      <button type="button" onClick={() => handleFilter(filter)}>
+        filter by
+      </button>
+      <button onClick={clearFilter}>clear filter</button>
+
       <br></br>
       <ul style={{ textAlign: "left" }}>
         {todos
