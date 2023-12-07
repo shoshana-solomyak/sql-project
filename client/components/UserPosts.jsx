@@ -54,11 +54,15 @@ const UserPosts = () => {
   return (
     <main>
       <h1>User Posts</h1>
-      <button type="button" onClick={() => setShowNew((prev) => !prev)}>
+      <button
+        className="newPostBtn"
+        type="button"
+        onClick={() => setShowNew((prev) => !prev)}
+      >
         Add new post
       </button>
       {showNew && (
-        <form>
+        <form className="makeNewForm">
           <label htmlFor="title">title: </label>
           <input
             type="text"

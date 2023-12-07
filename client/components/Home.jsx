@@ -98,7 +98,9 @@ const Home = () => {
         className="pageBtn"
         type="button"
         onClick={() => {
-          setCurrPage((prev) => (prev === 10 ? 10 : prev + 1));
+          setCurrPage((prev) =>
+            Object.keys(postsToShow).length < 10 ? prev : prev + 1
+          );
         }}
       >
         next page

@@ -140,8 +140,12 @@ function Todos() {
 
   return (
     <div>
-      <h1>todos</h1>
-      <select value={sort} onChange={(e) => sortTodos(e.target.value)}>
+      <h1 className="todosHeadline">todos</h1>
+      <select
+        className="sortSelect"
+        value={sort}
+        onChange={(e) => sortTodos(e.target.value)}
+      >
         <option>sort by</option>
         <option value="id">id</option>
         <option value="alphabetically">alphabetically</option>
